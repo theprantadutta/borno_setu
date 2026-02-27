@@ -4,10 +4,10 @@ import 'unicode_charset.dart';
 /// Converts Unicode Bangla text to Bijoy ANSI encoding.
 ///
 /// Uses a 4-stage pipeline (reverse of Bijoy→Unicode):
-/// 1. Pre-processing — decompose composed chars
+/// 1. Pre-processing — decompose composed chars, extract reph
 /// 2. Reverse reordering — move pre-kars before consonant clusters
 /// 3. Character mapping — replace Unicode chars with Bijoy equivalents
-/// 4. Post-processing — whitespace normalization
+/// 4. Post-processing — cleanup
 class UnicodeToBijoyConverter {
   const UnicodeToBijoyConverter();
 
@@ -23,9 +23,6 @@ class UnicodeToBijoyConverter {
   }
 
   /// Stage 1: Decompose composed Unicode characters.
-  ///
-  /// Composed vowel signs must be broken into their components so the
-  /// character mapper and reorderer can handle them properly.
   String _preProcess(String text) {
     var result = text;
 
@@ -39,16 +36,39 @@ class UnicodeToBijoyConverter {
     return result;
   }
 
-  /// Stage 2: Move pre-kars before their consonant clusters.
-  ///
-  /// In Unicode, pre-kars (ি, ে, ৈ) appear after the consonant they modify.
-  /// In Bijoy encoding, they appear before the consonant in the byte stream.
-  /// This stage reverses the Unicode ordering to match Bijoy expectations.
+  /// Stage 2: Move pre-kars before their consonant clusters and
+  /// convert reph (র্) to placeholder for correct positioning.
   String _reverseReorder(String text) {
     var result = text;
+    result = _reverseReph(result);
     result = _movePreKarsBefore(result);
     result = _reverseNukta(result);
     return result;
+  }
+
+  /// Convert র্ + consonant cluster to placeholder + cluster.
+  /// This reverses the reph repositioning done in Bijoy→Unicode.
+  String _reverseReph(String text) {
+    final chars = text.split('');
+    final result = <String>[];
+
+    var i = 0;
+    while (i < chars.length) {
+      // Look for র followed by ্ (hasanta) followed by a consonant
+      if (i + 2 < chars.length &&
+          chars[i] == '\u09B0' &&
+          chars[i + 1] == '\u09CD' &&
+          BanglaCharUtils.isBanglaConsonant(chars[i + 2])) {
+        // This is reph — replace with placeholder
+        result.add('\uFFFD');
+        i += 2; // Skip র্, keep the consonant for next iteration
+      } else {
+        result.add(chars[i]);
+        i++;
+      }
+    }
+
+    return result.join();
   }
 
   /// Move pre-kars to before their consonant+hasanta cluster.
@@ -58,26 +78,21 @@ class UnicodeToBijoyConverter {
 
     var i = 0;
     while (i < chars.length) {
-      // Check if current char is a consonant that might have a pre-kar after it
       if (BanglaCharUtils.isBanglaConsonant(chars[i])) {
-        // Collect the consonant+hasanta cluster
         final clusterStart = result.length;
         result.add(chars[i]);
         i++;
 
-        // Collect hasanta+consonant sequences
         while (i + 1 < chars.length &&
             BanglaCharUtils.isBanglaHasanta(chars[i]) &&
             BanglaCharUtils.isBanglaConsonant(chars[i + 1])) {
-          result.add(chars[i]); // hasanta
-          result.add(chars[i + 1]); // consonant
+          result.add(chars[i]);
+          result.add(chars[i + 1]);
           i += 2;
         }
 
-        // Check if a pre-kar follows the cluster
         if (i < chars.length && BanglaCharUtils.isBanglaPreKar(chars[i])) {
           final preKar = chars[i];
-          // Insert pre-kar before the cluster
           result.insert(clusterStart, preKar);
           i++;
         }
@@ -100,7 +115,6 @@ class UnicodeToBijoyConverter {
       if (BanglaCharUtils.isBanglaPostKar(chars[i]) &&
           i + 1 < chars.length &&
           BanglaCharUtils.isBanglaNukta(chars[i + 1])) {
-        // Swap: put chandrabindu before post-kar
         result.add(chars[i + 1]);
         result.add(chars[i]);
         i += 2;

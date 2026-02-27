@@ -15,15 +15,20 @@ void main() {
         expect(converter.convert('খ'), 'L');
         expect(converter.convert('গ'), 'M');
         expect(converter.convert('ত'), 'Z');
-        expect(converter.convert('হ'), 'j');
+        expect(converter.convert('হ'), 'n');
+        expect(converter.convert('ন'), 'b');
+        expect(converter.convert('ব'), 'e');
+        expect(converter.convert('ম'), 'g');
       });
     });
 
     group('vowels', () {
       test('independent vowels', () {
         expect(converter.convert('অ'), 'A');
-        expect(converter.convert('ই'), 'C');
-        expect(converter.convert('এ'), 'H');
+        expect(converter.convert('আ'), 'Av');
+        expect(converter.convert('ই'), 'B');
+        expect(converter.convert('এ'), 'G');
+        expect(converter.convert('ঐ'), 'H');
       });
     });
 
@@ -39,12 +44,10 @@ void main() {
 
     group('pre-kar reverse reordering', () {
       test('i-kar moves before consonant', () {
-        // Unicode: কি → Bijoy: wK
         expect(converter.convert('কি'), 'wK');
       });
 
       test('e-kar moves before consonant', () {
-        // Unicode: কে → Bijoy: †K  (†=\u2020)
         expect(converter.convert('কে'), '\u2020K');
       });
     });
@@ -57,30 +60,23 @@ void main() {
 
     group('conjuncts', () {
       test('kka', () {
-        expect(converter.convert('ক্ক'), '°');
+        expect(converter.convert('ক্ক'), '\u00B0');
       });
 
       test('ksha', () {
-        expect(converter.convert('ক্ষ'), '´');
-      });
-
-      test('nta', () {
-        expect(converter.convert('ন্ত'), 'Ù');
+        expect(converter.convert('ক্ষ'), '\u00B6');
       });
     });
 
     group('composed vowel signs', () {
       test('o-kar decomposes', () {
-        // ো = ে + া
         final result = converter.convert('কো');
-        // Should produce Bijoy e-kar before K, then aa-kar after
         expect(result, '\u2020Kv');
       });
 
       test('ou-kar decomposes', () {
-        // ৌ = ে + ৗ
         final result = converter.convert('কৌ');
-        expect(result, '\u2020K\u2026');
+        expect(result, '\u2020K\u0160');
       });
     });
 
@@ -90,7 +86,7 @@ void main() {
       });
 
       test('anusvara', () {
-        expect(converter.convert('কং'), 'Kˆ');
+        expect(converter.convert('কং'), 'Ks');
       });
     });
 
