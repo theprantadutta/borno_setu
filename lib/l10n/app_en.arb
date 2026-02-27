@@ -1,0 +1,53 @@
+{
+  "@@locale": "en",
+  "appTitle": "BornoSetu",
+  "converterTab": "Converter",
+  "historyTab": "History",
+  "settingsTab": "Settings",
+  "bijoyToUnicode": "Bijoy → Unicode",
+  "unicodeToBijoy": "Unicode → Bijoy",
+  "inputHintBijoy": "Paste your Bijoy text here...",
+  "inputHintUnicode": "Paste your Unicode Bangla text here...",
+  "convertButton": "Convert",
+  "copyButton": "Copy",
+  "pasteButton": "Paste",
+  "clearButton": "Clear",
+  "swapButton": "Swap",
+  "saveToHistory": "Save to History",
+  "copiedToClipboard": "Copied to clipboard",
+  "savedToHistory": "Saved to history",
+  "historyTitle": "History",
+  "clearAll": "Clear All",
+  "clearAllConfirmTitle": "Clear All History?",
+  "clearAllConfirmMessage": "This action cannot be undone.",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "noHistory": "No conversions yet",
+  "noHistorySubtitle": "Your conversion history will appear here",
+  "timeAgo": "{time} ago",
+  "@timeAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsTitle": "Settings",
+  "theme": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "language": "Language",
+  "aboutApp": "About BornoSetu",
+  "termsAndConditions": "Terms & Conditions",
+  "privacyPolicy": "Privacy Policy",
+  "version": "Version {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutDescription": "BornoSetu is a Bangla typing utility that converts between Bijoy ANSI and Unicode Bangla text."
+}

@@ -1,0 +1,53 @@
+{
+  "@@locale": "bn",
+  "appTitle": "বর্ণসেতু",
+  "converterTab": "রূপান্তর",
+  "historyTab": "ইতিহাস",
+  "settingsTab": "সেটিংস",
+  "bijoyToUnicode": "বিজয় → ইউনিকোড",
+  "unicodeToBijoy": "ইউনিকোড → বিজয়",
+  "inputHintBijoy": "এখানে বিজয় টেক্সট পেস্ট করুন...",
+  "inputHintUnicode": "এখানে ইউনিকোড বাংলা টেক্সট পেস্ট করুন...",
+  "convertButton": "রূপান্তর করুন",
+  "copyButton": "কপি",
+  "pasteButton": "পেস্ট",
+  "clearButton": "মুছুন",
+  "swapButton": "বিনিময়",
+  "saveToHistory": "ইতিহাসে সংরক্ষণ",
+  "copiedToClipboard": "ক্লিপবোর্ডে কপি হয়েছে",
+  "savedToHistory": "ইতিহাসে সংরক্ষিত হয়েছে",
+  "historyTitle": "ইতিহাস",
+  "clearAll": "সব মুছুন",
+  "clearAllConfirmTitle": "সমস্ত ইতিহাস মুছবেন?",
+  "clearAllConfirmMessage": "এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।",
+  "cancel": "বাতিল",
+  "delete": "মুছুন",
+  "noHistory": "এখনও কোনো রূপান্তর হয়নি",
+  "noHistorySubtitle": "আপনার রূপান্তর ইতিহাস এখানে দেখা যাবে",
+  "timeAgo": "{time} আগে",
+  "@timeAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsTitle": "সেটিংস",
+  "theme": "থিম",
+  "themeLight": "লাইট",
+  "themeDark": "ডার্ক",
+  "themeSystem": "সিস্টেম",
+  "language": "ভাষা",
+  "aboutApp": "বর্ণসেতু সম্পর্কে",
+  "termsAndConditions": "শর্তাবলী",
+  "privacyPolicy": "গোপনীয়তা নীতি",
+  "version": "সংস্করণ {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutDescription": "বর্ণসেতু একটি বাংলা টাইপিং ইউটিলিটি যা বিজয় ANSI এবং ইউনিকোড বাংলা টেক্সটের মধ্যে রূপান্তর করে।"
+}

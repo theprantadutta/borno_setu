@@ -1,0 +1,4 @@
+enum ConversionType {
+  bijoyToUnicode,
+  unicodeToBijoy,
+}
