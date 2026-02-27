@@ -39,6 +39,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get copyButton => 'কপি';
 
   @override
+  String get shareButton => 'শেয়ার';
+
+  @override
   String get pasteButton => 'পেস্ট';
 
   @override

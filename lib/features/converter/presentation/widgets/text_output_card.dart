@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:borno_setu/l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/clipboard_helper.dart';
 
@@ -50,6 +51,18 @@ class TextOutputCard extends StatelessWidget {
                         },
                   icon: const Icon(Icons.copy, size: 18),
                   label: Text(l10n.copyButton),
+                ),
+                const SizedBox(width: 8),
+                TextButton.icon(
+                  onPressed: text.isEmpty
+                      ? null
+                      : () async {
+                          await SharePlus.instance.share(
+                            ShareParams(text: text),
+                          );
+                        },
+                  icon: const Icon(Icons.share, size: 18),
+                  label: Text(l10n.shareButton),
                 ),
                 const SizedBox(width: 8),
                 TextButton.icon(

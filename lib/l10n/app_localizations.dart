@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'Copy'**
   String get copyButton;
 
+  /// No description provided for @shareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareButton;
+
   /// No description provided for @pasteButton.
   ///
   /// In en, this message translates to:

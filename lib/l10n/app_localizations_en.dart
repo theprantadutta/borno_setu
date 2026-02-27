@@ -39,6 +39,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyButton => 'Copy';
 
   @override
+  String get shareButton => 'Share';
+
+  @override
   String get pasteButton => 'Paste';
 
   @override

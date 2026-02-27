@@ -10,6 +10,7 @@
   "inputHintUnicode": "Paste your Unicode Bangla text here...",
   "convertButton": "Convert",
   "copyButton": "Copy",
+  "shareButton": "Share",
   "pasteButton": "Paste",
   "clearButton": "Clear",
   "swapButton": "Swap",
