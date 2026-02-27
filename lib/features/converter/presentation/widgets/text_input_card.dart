@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:borno_setu/l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/clipboard_helper.dart';
+import '../../../settings/presentation/providers/text_field_expanded_provider.dart';
 
-class TextInputCard extends StatelessWidget {
+class TextInputCard extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final VoidCallback onClear;
@@ -18,6 +20,23 @@ class TextInputCard extends StatelessWidget {
   });
 
   @override
+  ConsumerState<TextInputCard> createState() => _TextInputCardState();
+}
+
+class _TextInputCardState extends ConsumerState<TextInputCard> {
+  late bool _isExpanded;
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _isExpanded = ref.read(textFieldExpandedProvider);
+      _initialized = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Card(
@@ -27,35 +46,42 @@ class TextInputCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: controller,
-              maxLines: 6,
-              minLines: 4,
+              controller: widget.controller,
+              maxLines: _isExpanded ? 8 : 3,
+              minLines: _isExpanded ? 4 : 2,
               decoration: InputDecoration(
-                hintText: hintText,
+                hintText: widget.hintText,
                 border: InputBorder.none,
               ),
-              onChanged: onChanged,
+              onChanged: widget.onChanged,
             ),
             const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton.icon(
+                IconButton(
+                  onPressed: () => setState(() => _isExpanded = !_isExpanded),
+                  icon: Icon(
+                    _isExpanded ? Icons.unfold_less : Icons.unfold_more,
+                    size: 20,
+                  ),
+                  tooltip: _isExpanded ? l10n.collapseField : l10n.expandField,
+                ),
+                const Spacer(),
+                IconButton(
                   onPressed: () async {
                     final text = await ClipboardHelper.paste();
                     if (text != null && text.isNotEmpty) {
-                      controller.text = text;
-                      onChanged(text);
+                      widget.controller.text = text;
+                      widget.onChanged(text);
                     }
                   },
-                  icon: const Icon(Icons.paste, size: 18),
-                  label: Text(l10n.pasteButton),
+                  icon: const Icon(Icons.paste, size: 20),
+                  tooltip: l10n.pasteButton,
                 ),
-                const SizedBox(width: 8),
-                TextButton.icon(
-                  onPressed: onClear,
-                  icon: const Icon(Icons.clear, size: 18),
-                  label: Text(l10n.clearButton),
+                IconButton(
+                  onPressed: widget.onClear,
+                  icon: const Icon(Icons.clear, size: 20),
+                  tooltip: l10n.clearButton,
                 ),
               ],
             ),

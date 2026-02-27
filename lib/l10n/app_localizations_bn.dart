@@ -123,4 +123,13 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get aboutDescription =>
       'বর্ণসেতু একটি বাংলা টাইপিং ইউটিলিটি যা বিজয় ANSI এবং ইউনিকোড বাংলা টেক্সটের মধ্যে রূপান্তর করে।';
+
+  @override
+  String get keepTextFieldsExpanded => 'টেক্সট ফিল্ড প্রসারিত রাখুন';
+
+  @override
+  String get expandField => 'প্রসারিত করুন';
+
+  @override
+  String get collapseField => 'সংকুচিত করুন';
 }

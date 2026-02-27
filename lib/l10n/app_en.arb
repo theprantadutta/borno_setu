@@ -50,5 +50,8 @@
       }
     }
   },
-  "aboutDescription": "BornoSetu is a Bangla typing utility that converts between Bijoy ANSI and Unicode Bangla text."
+  "aboutDescription": "BornoSetu is a Bangla typing utility that converts between Bijoy ANSI and Unicode Bangla text.",
+  "keepTextFieldsExpanded": "Keep text fields expanded",
+  "expandField": "Expand",
+  "collapseField": "Collapse"
 }

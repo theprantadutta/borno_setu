@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:borno_setu/l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/clipboard_helper.dart';
+import '../../../settings/presentation/providers/text_field_expanded_provider.dart';
 
-class TextOutputCard extends StatelessWidget {
+class TextOutputCard extends ConsumerStatefulWidget {
   final String text;
   final VoidCallback onSaveToHistory;
 
@@ -13,6 +15,23 @@ class TextOutputCard extends StatelessWidget {
     required this.text,
     required this.onSaveToHistory,
   });
+
+  @override
+  ConsumerState<TextOutputCard> createState() => _TextOutputCardState();
+}
+
+class _TextOutputCardState extends ConsumerState<TextOutputCard> {
+  late bool _isExpanded;
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _isExpanded = ref.read(textFieldExpandedProvider);
+      _initialized = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,48 +46,64 @@ class TextOutputCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              constraints: const BoxConstraints(minHeight: 100),
+              constraints: BoxConstraints(
+                minHeight: _isExpanded ? 100 : 60,
+                maxHeight: _isExpanded ? double.infinity : 100,
+              ),
               padding: const EdgeInsets.all(8),
-              child: SelectableText(
-                text.isEmpty ? ' ' : text,
-                style: Theme.of(context).textTheme.bodyLarge,
+              child: SingleChildScrollView(
+                physics: _isExpanded
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                child: SelectableText(
+                  widget.text.isEmpty ? ' ' : widget.text,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             ),
             const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton.icon(
-                  onPressed: text.isEmpty
+                IconButton(
+                  onPressed: () => setState(() => _isExpanded = !_isExpanded),
+                  icon: Icon(
+                    _isExpanded ? Icons.unfold_less : Icons.unfold_more,
+                    size: 20,
+                  ),
+                  tooltip: _isExpanded ? l10n.collapseField : l10n.expandField,
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: widget.text.isEmpty
                       ? null
                       : () async {
-                          await ClipboardHelper.copy(text);
+                          await ClipboardHelper.copy(widget.text);
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(l10n.copiedToClipboard)),
+                              SnackBar(
+                                  content: Text(l10n.copiedToClipboard)),
                             );
                           }
                         },
-                  icon: const Icon(Icons.copy, size: 18),
-                  label: Text(l10n.copyButton),
+                  icon: const Icon(Icons.copy, size: 20),
+                  tooltip: l10n.copyButton,
                 ),
-                const SizedBox(width: 8),
-                TextButton.icon(
-                  onPressed: text.isEmpty
+                IconButton(
+                  onPressed: widget.text.isEmpty
                       ? null
                       : () async {
                           await SharePlus.instance.share(
-                            ShareParams(text: text),
+                            ShareParams(text: widget.text),
                           );
                         },
-                  icon: const Icon(Icons.share, size: 18),
-                  label: Text(l10n.shareButton),
+                  icon: const Icon(Icons.share, size: 20),
+                  tooltip: l10n.shareButton,
                 ),
-                const SizedBox(width: 8),
-                TextButton.icon(
-                  onPressed: text.isEmpty ? null : onSaveToHistory,
-                  icon: const Icon(Icons.save_outlined, size: 18),
-                  label: Text(l10n.saveToHistory),
+                IconButton(
+                  onPressed:
+                      widget.text.isEmpty ? null : widget.onSaveToHistory,
+                  icon: const Icon(Icons.save_outlined, size: 20),
+                  tooltip: l10n.saveToHistory,
                 ),
               ],
             ),

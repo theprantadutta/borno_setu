@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../widgets/language_selector_tile.dart';
+import '../widgets/text_field_expanded_tile.dart';
 import '../widgets/theme_selector_tile.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -21,6 +22,7 @@ class SettingsPage extends StatelessWidget {
         children: [
           const ThemeSelectorTile(),
           const LanguageSelectorTile(),
+          const TextFieldExpandedTile(),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.info_outline),

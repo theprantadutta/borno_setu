@@ -123,4 +123,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutDescription =>
       'BornoSetu is a Bangla typing utility that converts between Bijoy ANSI and Unicode Bangla text.';
+
+  @override
+  String get keepTextFieldsExpanded => 'Keep text fields expanded';
+
+  @override
+  String get expandField => 'Expand';
+
+  @override
+  String get collapseField => 'Collapse';
 }

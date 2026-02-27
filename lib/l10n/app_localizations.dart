@@ -319,6 +319,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'BornoSetu is a Bangla typing utility that converts between Bijoy ANSI and Unicode Bangla text.'**
   String get aboutDescription;
+
+  /// No description provided for @keepTextFieldsExpanded.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep text fields expanded'**
+  String get keepTextFieldsExpanded;
+
+  /// No description provided for @expandField.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand'**
+  String get expandField;
+
+  /// No description provided for @collapseField.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse'**
+  String get collapseField;
 }
 
 class _AppLocalizationsDelegate
