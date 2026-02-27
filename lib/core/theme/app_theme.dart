@@ -36,7 +36,7 @@ abstract final class AppTheme {
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         indicatorColor: colorScheme.secondaryContainer,
       ),
       snackBarTheme: const SnackBarThemeData(
